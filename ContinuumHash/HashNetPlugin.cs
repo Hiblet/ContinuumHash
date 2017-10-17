@@ -52,7 +52,7 @@ namespace ContinuumHash
                 xe = XmlHelpers.GetFirstChildByName(configElement, Constants.ALGOKEY, false);
                 if (xe != null) _algo = xe.InnerText;
 
-                xe = XmlHelpers.GetFirstChildByName(configElement, Constants.DEFAULTOUTPUTFIELD, false);
+                xe = XmlHelpers.GetFirstChildByName(configElement, Constants.OUTPUTFIELDKEY, false);
                 if (xe != null)
                 {
                     if (!string.IsNullOrWhiteSpace(xe.InnerText))
@@ -196,19 +196,6 @@ namespace ContinuumHash
             return performHashGeneric(message, hmac);
         }
 
-        /*
-    private string performHash(string secret, string message)
-    {
-        if (string.Equals(_algo, Constants.SHA1, StringComparison.OrdinalIgnoreCase)) return performHashSha1(secret, message);
-        if (string.Equals(_algo, Constants.SHA256, StringComparison.OrdinalIgnoreCase)) return performHashSha256(secret, message);
-        if (string.Equals(_algo, Constants.SHA384, StringComparison.OrdinalIgnoreCase)) return performHashSha384(secret, message);
-        if (string.Equals(_algo, Constants.SHA512, StringComparison.OrdinalIgnoreCase)) return performHashSha512(secret, message);
-        if (string.Equals(_algo, Constants.MD5, StringComparison.OrdinalIgnoreCase)) return performHashMd5(secret, message);
-        if (string.Equals(_algo, Constants.RIPEMD160, StringComparison.OrdinalIgnoreCase)) return performHashRipe(secret, message);
-
-        throw new Exception($"Hash algo [{_algo}] not recognised");
-    }
-    */
 
         /// <summary>
         /// 
@@ -234,43 +221,6 @@ namespace ContinuumHash
             return Convert.ToBase64String(hashBytes);
         }
 
-        /*
-        private string performHashSha1(string secret, string message)
-        {
-            var hmac = new HMACSHA1 { Key = System.Text.Encoding.ASCII.GetBytes(secret) };
-            byte[] dataBuffer = System.Text.Encoding.ASCII.GetBytes(message);
-            byte[] hashBytes = hmac.ComputeHash(dataBuffer);
-
-            return Convert.ToBase64String(hashBytes);
-        }
-
-        private string performHashSha256(string secret, string message)
-        {
-            var hmac = new HMACSHA256 { Key = System.Text.Encoding.ASCII.GetBytes(secret) };
-
-            //return $"WOULD HASH MESSAGE [{message}] WITH SECRET [{secret}] USING ALGO [{_algo}]";
-        }
-
-        private string performHashSha384(string secret, string message)
-        {
-            return $"WOULD HASH MESSAGE [{message}] WITH SECRET [{secret}] USING ALGO [{_algo}]";
-        }
-
-        private string performHashSha512(string secret, string message)
-        {
-            return $"WOULD HASH MESSAGE [{message}] WITH SECRET [{secret}] USING ALGO [{_algo}]";
-        }
-
-        private string performHashMd5(string secret, string message)
-        {
-            return $"WOULD HASH MESSAGE [{message}] WITH SECRET [{secret}] USING ALGO [{_algo}]";
-        }
-
-        private string performHashRipe(string secret, string message)
-        {
-            return $"WOULD HASH MESSAGE [{message}] WITH SECRET [{secret}] USING ALGO [{_algo}]";
-        }
-        */
 
         /// <summary>
         /// Return a list of the inbound field names from record info in.
@@ -317,7 +267,20 @@ namespace ContinuumHash
                 FieldBase fbOut = _recordInfoOut[i];
 
                 // Point a fieldbase reference to the record out item.
-                fbOut.SetFromString(recordOut, fbIn.GetAsString(recordDataIn));
+                string fbData = "";
+                try
+                {
+                    fbData = fbIn.GetAsString(recordDataIn) ?? "";
+                }
+                catch (NullReferenceException)
+                {
+                    // If there is no data, catch and write out an empty string
+                    fbData = "";
+                }
+                finally
+                {
+                    fbOut.SetFromString(recordOut, fbData);
+                }
             }
         }
 

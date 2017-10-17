@@ -169,7 +169,7 @@ namespace ContinuumHash
             xe.InnerText = string.IsNullOrWhiteSpace(outputField) ? Constants.DEFAULTOUTPUTFIELD : outputField;
 
             // Set the default annotation to be the name of the tool.
-            strDefaultAnnotation = "Hash";
+            strDefaultAnnotation = "";
         }
 
 
