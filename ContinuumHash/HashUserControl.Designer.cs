@@ -40,8 +40,9 @@
             this.comboBoxAlgo = new System.Windows.Forms.ComboBox();
             this.labelHashAlgo = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.labelHashOutputField = new System.Windows.Forms.Label();
             this.textBoxOutputField = new System.Windows.Forms.TextBox();
+            this.labelHashOutputField = new System.Windows.Forms.Label();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.labelVersion);
             this.panel1.Controls.Add(this.labelHashHeader);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -154,6 +156,13 @@
             this.panel5.Size = new System.Drawing.Size(300, 50);
             this.panel5.TabIndex = 4;
             // 
+            // textBoxOutputField
+            // 
+            this.textBoxOutputField.Location = new System.Drawing.Point(105, 15);
+            this.textBoxOutputField.Name = "textBoxOutputField";
+            this.textBoxOutputField.Size = new System.Drawing.Size(180, 20);
+            this.textBoxOutputField.TabIndex = 2;
+            // 
             // labelHashOutputField
             // 
             this.labelHashOutputField.AutoSize = true;
@@ -163,12 +172,15 @@
             this.labelHashOutputField.TabIndex = 1;
             this.labelHashOutputField.Text = "Output Field:";
             // 
-            // textBoxOutputField
+            // labelVersion
             // 
-            this.textBoxOutputField.Location = new System.Drawing.Point(105, 15);
-            this.textBoxOutputField.Name = "textBoxOutputField";
-            this.textBoxOutputField.Size = new System.Drawing.Size(180, 20);
-            this.textBoxOutputField.TabIndex = 2;
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVersion.Location = new System.Drawing.Point(67, 22);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(46, 13);
+            this.labelVersion.TabIndex = 1;
+            this.labelVersion.Text = "(v 1.0.1)";
             // 
             // HashUserControl
             // 
@@ -211,5 +223,6 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label labelHashOutputField;
         private System.Windows.Forms.TextBox textBoxOutputField;
+        private System.Windows.Forms.Label labelVersion;
     }
 }
