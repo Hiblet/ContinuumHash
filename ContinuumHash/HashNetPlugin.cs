@@ -99,6 +99,8 @@ namespace ContinuumHash
         {
             _recordInfoIn = recordInfo;
 
+            prepRecordInfoOut(); // This allows zero record run to succeed and fixes problem with downstream tool complaining about a stream not being initialized.
+
             return true;
         }
 
@@ -124,12 +126,7 @@ namespace ContinuumHash
 
         public bool II_PushRecord(RecordData recordDataIn)
         {
-            if (_recordInfoOut == null)
-            {
-                // Prep the output once
-                populateRecordInfoOut();
-                _outputHelper.Init(_recordInfoOut, "Output", null, _xmlProperties);
-            }
+            prepRecordInfoOut();
 
             string secret = getFieldBaseStringData(_secretField, recordDataIn);
             string message = getFieldBaseStringData(_messageField, recordDataIn);
@@ -281,6 +278,16 @@ namespace ContinuumHash
                 {
                     fbOut.SetFromString(recordOut, fbData);
                 }
+            }
+        }
+
+        private void prepRecordInfoOut()
+        {
+            if (_recordInfoOut == null)
+            {
+                // Prep the output once
+                populateRecordInfoOut();
+                _outputHelper.Init(_recordInfoOut, "Output", null, _xmlProperties);
             }
         }
 
